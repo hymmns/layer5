@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo } from "react";
 import { graphql } from "gatsby";
 
 import SEO from "../components/seo";
@@ -12,25 +12,32 @@ export const query = graphql`query ProgramByName($program: String!) {
     filter: {frontmatter: {program: {eq: $program}}}
   ) {
     nodes {
-      body
       frontmatter {
         title
         program
+      }
+      fields {
+        slug
       }
     }
   }
 }`;
 
-const ProgramsPage = ({ data }) => {
-  const [activeOption, setActiveOption] = useState(0);
+const ProgramsPage = ({ data, children, pageContext }) => {
   const programs = data.allMdx.nodes;
+  const { navigate } = require("gatsby");
 
-  const options = programs.map((program, index) => {
+  const activeOption = useMemo(() => {
+    const initialIndex = programs.findIndex((program) => program.fields.slug === pageContext.slug);
+    return initialIndex !== -1 ? initialIndex : 0;
+  }, [programs, pageContext.slug]);
+
+  const options = useMemo(() => programs.map((program) => {
     let optionItem = new Object();
     optionItem.label = program.frontmatter.title;
-    optionItem.value = index;
+    optionItem.value = program.fields.slug;
     return optionItem;
-  });
+  }), [programs]);
   return (
 
     <>
@@ -39,9 +46,11 @@ const ProgramsPage = ({ data }) => {
       <ProgramsSingle
         data={programs[activeOption]}
         options={options}
-        setActiveOption={setActiveOption}
+        setActiveOption={(slug) => navigate(slug)}
         activeOption={activeOption}
-      />
+      >
+        {children}
+      </ProgramsSingle>
 
     </>
 

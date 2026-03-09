@@ -44,7 +44,8 @@ const MembersGrid = (props) => {
           <div className="members-profile-cards">
             <Row style={{
               flexWrap: "wrap"
-            }}>
+            }}
+            >
               {props?.data?.map(({ id, frontmatter, fields }) => (
                 <Col $xs={12} $sm={6} $md={6} $lg={4} $xl={3} key={id}>
                   <ProfileCard
@@ -90,12 +91,12 @@ const MembersGrid = (props) => {
                 Nighthawk
                 </Link>
                 , and{" "}
-                <Link to="https://www.linkedin.com/showcase/service-mesh-performance">
+                <Link to="https://www.linkedin.com/showcase/kanvas-new">
                   Service Mesh Performance
                 </Link>{" "}
                 LinkedIn pages, too. We openly and publicly share our community
                 meetings on{" "}
-                <Link to="https://www.youtube.com/channel/UCFL1af7_wdnhHXL1InzaMvA?sub_confirmation=1">
+                <Link to="https://www.youtube.com/Layer5io?sub_confirmation=1">
                   YouTube
                 </Link>
                 .
@@ -137,7 +138,8 @@ const MembersGrid = (props) => {
                 width: "22rem",
                 height: "auto",
                 marginLeft: marginLeft,
-              }}/>
+              }}
+              />
             </div>
             <div className="detailsCommunity">
               <p>
